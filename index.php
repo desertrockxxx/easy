@@ -17,7 +17,9 @@ $_SESSION['username'] = $username;
 echo "Hallo $username <br />
 <a href='logout.php'>Logout</a>  <br />
 <a href='index.php'>Home</a>  <br />
-<a href='register.php'>Register</a>";
+<a href='register.php'>Register</a> <br />
+Follower & Owner
+";
 ?>
 
 
@@ -285,5 +287,5 @@ echo "Hallo $username <br />
     </div>
 </div>
 
-</body>    
-</html>
+
+<?php //require_once("footer.php");?>

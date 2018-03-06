@@ -36,14 +36,13 @@ $mindset = $_GET['mindset'];
         </div>
         </form>
         
-        
         <?php
         // INSERT
         // Wenn answer und file_upload gesetzt, dann beide in Tabelle answer einfügen
         if(isset($_POST['answer']) && !empty($_POST['answer']) &&
             isset($_POST['file_upload']) && !empty($_POST['file_upload']) &&
             isset($_POST['mindset']) && !empty($_POST['mindset']))
-            {
+        {
             // put data in answers 
             $sql = "INSERT INTO answers(answer, file_upload, mindset, question_id) VALUES (:answer, :file_upload, :mindset, :question_id)";
             // prepare statement                                      
@@ -62,6 +61,5 @@ $mindset = $_GET['mindset'];
         </div>
     </div> 
 </div>
-        
-</body>
-</html>
+
+<?php //require_once("footer.php");?>

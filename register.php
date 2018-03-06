@@ -34,6 +34,5 @@ require_once("header.php");
 
 <a href="index.php">Home</a>
 
-</body>
-</html>
+<?php require_once("footer.php");?>
 
