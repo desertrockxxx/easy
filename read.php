@@ -3,7 +3,17 @@ require_once("header.php");
 
 // get id 
 $id = $_GET['id'];
+
+$object = new Mindset;
+$advantage = "Advantage";
+$disadvantage = "Disadvantage";
+$argument = "Argument";
+$counterargument = "Counter-argument";
+$thesis = "Thesis";
+$antithesis = "Antithesis";
+
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -24,18 +34,10 @@ $id = $_GET['id'];
                 </tr>
             </thead>
             <tbody>
-             <?php
-            // SELECT
-            $sql= "SELECT * FROM questions WHERE id = $id";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            foreach($result as $row){
-                echo "<tr><td>{$row['id']}</td>";
-                echo "<td>{$row['question']}</td>";
-                echo "</tr>";
-                }
-            ?>   
+                <tr>
+                    <td><?php echo $id; ?></td>
+                    <td><?php $object->getQuestion($id); ?></td>
+                </tr>
             </tbody>
             </table>
         </div>
@@ -51,44 +53,12 @@ $id = $_GET['id'];
                     <th>ID</th>
                     <th>Vorteile</th>
                     <th>Beweise</th>
-                    <th>Read</th>
-                    <th>Update</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // SELECT 
-                $sql= "SELECT id, answer, file_upload FROM answers WHERE mindset = 'Advantage' AND question_id = $id";
                 
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->fetchAll();
-                foreach($result as $row){
-                    echo "<tr><td>{$row['id']}</td>";
-                    echo "<td> {$row['answer']}</td>";
-                    echo "<td> {$row['file_upload']}</td>";
-                    // Lesen von Datensätzen
-                    echo "<td><a href='single.php?id={$row['id']}'>read</a></td>";
-                    // Link der zu update.php führt und id von Beitrag dranhängt
-                    echo "<td><a href='update.php?id={$row['id']}'>o</a></td>";
-                    // führt zu index.php und hängt id an delete an
-                    echo "<td><a href='?delete={$row['id']}'>x</a></td>";
-                    echo "</tr>";
-                }
+            <?php $object->getID($id, $advantage); ?>
             
-                // wenn delete=id gesetzt, dann löschen
-                if(isset($_GET['delete']) &&
-                    !empty($_GET['delete'])){
-                    // nimm die delete=id
-                    $delID = $_GET['delete'];
-                    // DELETE
-                    $sql = "DELETE FROM answers WHERE id = $delID";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bindParam(':id', $_GET['delete'], PDO::PARAM_INT);   
-                    $stmt->execute();
-                }
-                ?>
             </tbody>
             </table>
         
@@ -102,24 +72,15 @@ $id = $_GET['id'];
         <table class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nachteile</th>
                     <th>Beweise</th>
                 </tr>
             </thead>
             <tbody>
-        <?php
-        // SELECT
-        $sql= "SELECT answer, file_upload FROM answers 
-        WHERE mindset = 'Disadvantage' AND question_id = $id";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $row){
-            echo "<tr><td>{$row['answer']}</td>";
-            echo "<td>{$row['file_upload']}</td>";
-            echo "</tr>";
-        }
-        ?>
+                
+            <?php $object->getID($id, $disadvantage); ?>
+            
             </tbody>
         </table>
         
@@ -127,7 +88,7 @@ $id = $_GET['id'];
         
         </div>
     </div>
-    <!-- TEST TEST TEST -->
+    
     <div class="row">
         <div class="col-sm-offset-3 col-sm-3">
         <!--Argument Section-->
@@ -135,24 +96,13 @@ $id = $_GET['id'];
         <table class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Argument</th>
                     <th>Beweise</th>
                 </tr>
             </thead>
             <tbody>
-        <?php
-        // SELECT
-        $sql= "SELECT answer, file_upload FROM answers 
-        WHERE mindset = 'Argument' AND question_id = $id";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $row){
-            echo "<tr><td>{$row['answer']}</td>";
-            echo "<td>{$row['file_upload']}</td>";
-            echo "</tr>";
-        }
-        ?>
+            <?php $object->getID($id, $argument); ?>
             </tbody>
         </table>
         
@@ -165,24 +115,15 @@ $id = $_GET['id'];
         <table class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Gegenargument</th>
                     <th>Beweise</th>
                 </tr>
             </thead>
             <tbody>
-        <?php
-        // SELECT
-        $sql= "SELECT answer, file_upload FROM answers 
-        WHERE mindset = 'Counter-argument' AND question_id = $id";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $row){
-            echo "<tr><td>{$row['answer']}</td>";
-            echo "<td>{$row['file_upload']}</td>";
-            echo "</tr>";
-        }
-        ?>
+                
+            <?php $object->getID($id, $counterargument); ?>
+            
             </tbody>
         </table>
         
@@ -190,8 +131,7 @@ $id = $_GET['id'];
         
         </div>
     </div>
-    
-    <!-- TEST TEST TEST -->
+
     <div class="row">
         <div class="col-sm-offset-3 col-sm-3">
         <!--Thesis Section-->
@@ -199,24 +139,15 @@ $id = $_GET['id'];
         <table class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>These</th>
                     <th>Beweise</th>
                 </tr>
             </thead>
             <tbody>
-        <?php
-        // SELECT
-        $sql= "SELECT answer, file_upload FROM answers 
-        WHERE mindset = 'Thesis' AND question_id = $id";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $row){
-            echo "<tr><td>{$row['answer']}</td>";
-            echo "<td>{$row['file_upload']}</td>";
-            echo "</tr>";
-        }
-        ?>
+            
+            <?php $object->getID($id, $thesis); ?>
+            
             </tbody>
         </table>
         
@@ -229,24 +160,15 @@ $id = $_GET['id'];
         <table class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Antithese</th>
                     <th>Beweise</th>
                 </tr>
             </thead>
             <tbody>
-        <?php
-        // SELECT
-        $sql= "SELECT answer, file_upload FROM answers 
-        WHERE mindset = 'Antithesis' AND question_id = $id";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $row){
-            echo "<tr><td>{$row['answer']}</td>";
-            echo "<td>{$row['file_upload']}</td>";
-            echo "</tr>";
-        }
-        ?>
+                
+            <?php $object->getID($id, $antithesis); ?>
+            
             </tbody>
         </table>
         
@@ -268,21 +190,9 @@ $id = $_GET['id'];
                     </tr>
                 </thead>
                 <tbody>
-            <?php
-            // SELECT
-            $sql= "SELECT questions.question, answer, answers.file_upload, answers.mindset 
-            FROM questions INNER JOIN answers ON questions.id = answers.question_id 
-            WHERE questions.id = $id ";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            foreach($result as $row){
-                echo "<tr><td>{$row['answer']}</td>";
-                echo "<td>{$row['file_upload']}</td>";
-                echo "<td>{$row['mindset']}</td>";
-                echo "</tr>";
-            }
-            ?>
+                    
+                <?php $object->getAllAnswers($id); ?>
+                
                 </tbody>
             </table>
 
@@ -293,5 +203,5 @@ $id = $_GET['id'];
     </div>
 </div> 
 
-<?php //require_once("footer.php");?>
+<?php require_once("footer.php");?>
 

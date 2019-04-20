@@ -3,13 +3,25 @@ require_once("header.php");
 
 // get id 
 $id = $_GET['id'];
-
+// get mindset
 $mindset = $_GET['mindset'];
+
+
+$object = new Mindset;
+$advantage = "Advantage";
+$disadvantage = "Disadvantage";
+$argument = "Argument";
+$counterargument = "Counter-argument";
+$thesis = "Thesis";
+$antithesis = "Antithesis";
+
 ?>
 
 <div class="container col-sm-12">
     <div class="row">
         <div class="col-sm-12">
+        <h1><?php $object->getQuestion($id); ?></h1>   
+        
         <!--Frage neue Antworten hinzuzufügen-->
         <form id="send" method="POST" action="create.php?id=<?php echo $id;?>">
         <div>
@@ -37,24 +49,14 @@ $mindset = $_GET['mindset'];
         </form>
         
         <?php
-        // INSERT
-        // Wenn answer und file_upload gesetzt, dann beide in Tabelle answer einfügen
-        if(isset($_POST['answer']) && !empty($_POST['answer']) &&
-            isset($_POST['file_upload']) && !empty($_POST['file_upload']) &&
-            isset($_POST['mindset']) && !empty($_POST['mindset']))
-        {
-            // put data in answers 
-            $sql = "INSERT INTO answers(answer, file_upload, mindset, question_id) VALUES (:answer, :file_upload, :mindset, :question_id)";
-            // prepare statement                                      
-            $stmt = $conn->prepare($sql);
-            // bind parameters                                             
-            $stmt->bindParam(':answer', $_POST['answer'], PDO::PARAM_STR);       
-            $stmt->bindParam(':file_upload', $_POST['file_upload'], PDO::PARAM_STR);
-            $stmt->bindParam(':mindset', $_POST['mindset'], PDO::PARAM_STR); 
-            $stmt->bindParam(':question_id', $id, PDO::PARAM_STR); 
-            // execute                                
-            $stmt->execute();
+        $answer = $_POST['answer'];
+        $fileupload = $_POST['file_upload'];
         
+        if(isset($answer) && !empty($answer) &&
+            isset($fileupload) && !empty($fileupload) &&
+            isset($mindset) && !empty($mindset))
+        {
+            $object->createAnswer();
             echo "Antwort erstellt zu " . $id . "!";
         }
         ?>
@@ -62,4 +64,4 @@ $mindset = $_GET['mindset'];
     </div> 
 </div>
 
-<?php //require_once("footer.php");?>
+<?php require_once("footer.php");?>
