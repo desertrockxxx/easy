@@ -1,7 +1,7 @@
 <?php
 // connect
 $servername = "localhost";
-$username = "markschuster";
+$username = "root";
 $password = "";
 
 try {
@@ -20,7 +20,7 @@ catch(PDOException $e)
 class Database
 {
     private $host = "localhost";
-    private $user = "markschuster";
+    private $user = "root";
     private $pass = "";
     private $dbname = "easydb";
     

@@ -10,7 +10,7 @@ class Dbh
     
     public function connect(){
         $this->servername = "localhost";
-        $this->username = "markschuster";
+        $this->username = "root";
         $this->password = "";
         $this->dbname = "easydb";
         $this->charset = "utf8mb4";

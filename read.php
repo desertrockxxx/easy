@@ -62,7 +62,7 @@ $antithesis = "Antithesis";
             </tbody>
             </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Advantage';">Create New Advantage</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Advantage';">Create New Advantage</button>
 
         </div>
 
@@ -84,7 +84,7 @@ $antithesis = "Antithesis";
             </tbody>
         </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Disadvantage';">Create New Disadvantage</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Disadvantage';">Create New Disadvantage</button>
         
         </div>
     </div>
@@ -106,7 +106,7 @@ $antithesis = "Antithesis";
             </tbody>
         </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Argument';">Create New Argument</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Argument';">Create New Argument</button>
         
         </div>
         <div class="col-sm-3">
@@ -127,7 +127,7 @@ $antithesis = "Antithesis";
             </tbody>
         </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Counter-argument';">Create New Counter-argument</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Counter-argument';">Create New Counter-argument</button>
         
         </div>
     </div>
@@ -151,7 +151,7 @@ $antithesis = "Antithesis";
             </tbody>
         </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Thesis';">Create New Thesis</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Thesis';">Create New Thesis</button>
         
         </div>
         <div class="col-sm-3">
@@ -172,7 +172,7 @@ $antithesis = "Antithesis";
             </tbody>
         </table>
         
-        <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>&mindset=Antithesis';">Create New Antithesis</button>
+        <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>&mindset=Antithesis';">Create New Antithesis</button>
         
         </div>
     </div>
@@ -196,7 +196,7 @@ $antithesis = "Antithesis";
                 </tbody>
             </table>
 
-            <button type="button" class="btn btn-success" onclick="location.href='/create.php?id=<?php echo $id;?>';">Create New Answer</button>
+            <button type="button" class="btn btn-success" onclick="location.href='create.php?id=<?php echo $id;?>';">Create New Answer</button>
             <button type="button" class="btn btn-primary" onclick="location.href='/';">Create New Question</button>
             <button type="button" class="btn btn-danger" onclick="location.href='/';">Go Back</button>
         </div>

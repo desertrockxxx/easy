@@ -3,10 +3,10 @@ require_once("header.php");
 
 $object = new Mindset;
 
-$categorie = $_POST['categorie'];
-$delete = $_GET['delete'];
-$question = $_POST['question'];
-$categorie_id = $_POST['categorie_id'];
+if(isset($_POST['categorie'])){$categorie = $_POST['categorie'];}
+if(isset($_GET['delete'])){$delete = $_GET['delete'];}
+if(isset($_POST['question'])){$question = $_POST['question'];}
+if(isset($_POST['categorie_id'])){$categorie_id = $_POST['categorie_id'];}
 
 
 ?>

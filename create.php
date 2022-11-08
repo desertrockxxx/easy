@@ -2,9 +2,18 @@
 require_once("header.php");
 
 // get id 
-$id = $_GET['id'];
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+} else {
+    $id = "";
+}
+
 // get mindset
-$mindset = $_GET['mindset'];
+if(isset($_GET['mindset']) || $_GET['mindset'] == ""){
+    $mindset = $_GET['mindset'];
+} else {
+    $mindset = "";
+}
 
 
 $object = new Mindset;
@@ -49,8 +58,20 @@ $antithesis = "Antithesis";
         </form>
         
         <?php
-        $answer = $_POST['answer'];
-        $fileupload = $_POST['file_upload'];
+        // get answer
+        if(isset($_POST['answer'])){
+            $answer = $_POST['answer'];
+        } else {
+            $answer = "";
+        }
+        // get file_upload
+        if(isset($_POST['file_upload'])){
+            $fileupload = $_POST['file_upload'];
+        } else {
+            $fileupload = "";
+        }
+            
+        
         
         if(isset($answer) && !empty($answer) &&
             isset($fileupload) && !empty($fileupload) &&
