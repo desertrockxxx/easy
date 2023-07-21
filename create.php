@@ -1,21 +1,13 @@
 <?php
 require_once("header.php");
 
-// get id 
-if(isset($_GET['id'])){
-    $id = $_GET['id'];
-} else {
-    $id = "";
-}
+// get id
+$id = $_GET['id'] ?? '';
 
 // get mindset
-if(isset($_GET['mindset']) || $_GET['mindset'] == ""){
-    $mindset = $_GET['mindset'];
-} else {
-    $mindset = "";
-}
+$mindset = $_GET['mindset'] ?? '';
 
-
+// Variablen initialisieren
 $object = new Mindset;
 $advantage = "Advantage";
 $disadvantage = "Disadvantage";

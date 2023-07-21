@@ -2,48 +2,43 @@
 
 class Mindset extends Dbh
 {
-    // simple method
-    public function getAllUsersSimple(){
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function getAllUsersSimple()
+    {
         $sql = "SELECT * FROM users";
         $stmt = $this->connect()->query($sql);
-        while ($row = $stmt->fetch()){
-            $uid = $row['uid'];
-            return $uid;
-        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getID($id, $mindset)
     {
         $sql = "SELECT id, answer, file_upload 
-        FROM answers WHERE mindset = :mindset AND question_id =:id";
+        FROM answers WHERE mindset = :mindset AND question_id = :id";
         
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(":id"=>$id,":mindset"=>$mindset));
+        $stmt->execute(array(":id" => $id, ":mindset" => $mindset));
         
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            echo "<tr><td>{$row['id']}</td>";
-            echo "<td> {$row['answer']}</td>";
-            echo "<td> {$row['file_upload']}</td>";
-        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function getQuestion($id){
         $sql= "SELECT * FROM questions WHERE id = :id";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(":id"=>$id));
+        $stmt->execute(array(":id" => $id));
         
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo $row['question'];
         }
     }
     
     public function updateQuestion($id, $question){
-        $sql = "UPDATE questions SET question = :question WHERE id= :id";
+        $sql = "UPDATE questions SET question = :question WHERE id = :id";
         $stmt = $this->connect()->prepare($sql); 
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);   
-        $stmt->bindParam(':question', $question, PDO::PARAM_STR);       
-        $stmt->execute(); 
-        
+        $stmt->execute(array(":id" => $id, ":question" => $question)); 
     }
     
     public function getAllAnswers($id){
@@ -51,12 +46,12 @@ class Mindset extends Dbh
         FROM questions 
         INNER JOIN answers 
         ON questions.id = answers.question_id 
-        WHERE questions.id = :id ";
+        WHERE questions.id = :id";
         
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute(array(":id"=>$id));
+        $stmt->execute(array(":id" => $id));
         
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr><td>{$row['answer']}</td>";
             echo "<td>{$row['file_upload']}</td>";
             echo "<td>{$row['mindset']}</td></tr>";
@@ -67,19 +62,13 @@ class Mindset extends Dbh
         $sql= "SELECT * FROM categories";
         
         $stmt = $this->connect()->query($sql);
-        $stmt->execute();
-        
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            echo "<tr><td>{$row['id']}</td>";
-            echo "<td> {$row['categorie']}</td></tr>";
-        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function setCategorie($categorie){
         $sql = "INSERT INTO categories(categorie) VALUES (:categorie)";  
         $stmt = $this->connect()->prepare($sql);                                         
-        $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);                           
-        $stmt->execute(); 
+        $stmt->execute(array(":categorie" => $categorie)); 
     }
     
     public function getAllQuestions(){
@@ -90,10 +79,10 @@ class Mindset extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr><td>{$row['id']}</td>";
-            echo "<td> {$row['question']}</td>";
-            echo "<td> {$row['categorie']}</td>";
+            echo "<td>{$row['question']}</td>";
+            echo "<td>{$row['categorie']}</td>";
             // Lesen von Datensätzen
             echo "<td><a href='read.php?id={$row['id']}'>read</a></td>";
             // Link der zu update.php führt und id von Beitrag dranhängt
@@ -105,27 +94,25 @@ class Mindset extends Dbh
     }
     
     public function deleteQuestion($delID){
-        $sql = "DELETE FROM questions WHERE id = $delID";
-        
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':id', $delID, PDO::PARAM_INT);   
-        $stmt->execute();
-    }
+        $sql = "UPDATE questions SET deleted = 'ja' WHERE id = :id";
     
-    public function createAnswer(){
-        // put data in answers 
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(array(":id" => $delID));
+    }
+
+
+    public function createAnswer($answer, $fileupload, $mindset, $id)
+    {
         $sql = "INSERT INTO answers(answer, file_upload, mindset, question_id) 
             VALUES (:answer, :file_upload, :mindset, :question_id)";
-        // prepare statement                                      
-        $stmt = $conn->prepare($sql);
-        // bind parameters                                             
-        $stmt->bindParam(':answer', $answer, PDO::PARAM_STR);       
-        $stmt->bindParam(':file_upload', $fileupload, PDO::PARAM_STR);
-        $stmt->bindParam(':mindset', $mindset, PDO::PARAM_STR); 
-        $stmt->bindParam(':question_id', $id, PDO::PARAM_STR); 
-        // execute                                
-        $stmt->execute();
+        
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(array(
+            ":answer" => $answer,
+            ":file_upload" => $fileupload,
+            ":mindset" => $mindset,
+            ":question_id" => $id
+        ));
     }
-    
 }
 ?>
